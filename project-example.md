@@ -1,7 +1,8 @@
 # Local Attractions Near Me
 
 
-_Note: This is meant to be an example for the project expectations_
+_Note: This is meant to be an example of a project that meets expecations_
+
 This database will showcase some of the outdoor attractions near me in Seaside, CA. These are my personal picks for attraction spots.
 
 Here is how I will be organizing my table:
@@ -46,7 +47,7 @@ INSERT INTO `attractions`.`outdoors`
     ('Ford Ord National Monument', 36.63737038400571, -121.79692629014683, 5),
     ('Monterey State Beach', 36.60997975639459, -121.86011840522858, 4),
     ('Laguna Grande Park`', 36.60244838821196, -121.85419428770199, 3),
-    ('Pacchetti Dog Park', 36.599251872167585, -121.83880874344112, 3);
+    ('Pacchetti Dog Park', 36.599251872167585, -121.83880874344112, 3),
     ('Del Monte Beach', 36.60591157243876, -121.86885833890202, 5),
     ('Neil Park', 36.60814823018806, -121.82598972202118, 3),
     ('Stuart Park', 36.61415836365607, -121.8267472153426, 3),
@@ -62,9 +63,26 @@ For this case, I am curious to know: __What are my favorite places to visit in m
 To be clear, favorite here implies a rating of 4 or greater. Let's get that information using SQL.
 
 ```
-SELECT `name`
+SELECT `name`, `rating`
 FROM `attractions`.`outdoors`
 WHERE `rating` >= 4; 
 ```
 
 If we do that, we should recieve the following table as a result:
+
+| name | rating |
+|--- | --- |
+| Ford Ord National Monument | 5 |
+| Monterey State Beach | 4 |
+| Del Monte State Beach | 5 |
+
+
+### Wrap Up
+
+This project meet all the requirements, which are:
+- At least one relation
+- At least three columns
+- At least ten rows
+- At least one question that is answered through a SQL query
+
+Once finished, please export your database as a SQL file and upload it to the Google Classroom Project Assignment. There should be a private comment section there as well, and that's where you will submit your question and SQL expression that answers your question.
