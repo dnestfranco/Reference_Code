@@ -56,4 +56,5 @@ The additonal arguments assist us with refining our queries. Here are some of th
     - `DESC` or `ASC` - DESC is for descending, ASC is for ascending
 - `LIKE` - The logical operator that compares to a string of text
     - `%` - Wildcard operator that is an abstract placeholder for characters
+    -   Learn more about it here at https://www.w3schools.com/SQL/sql_like.asp
 - `LIMIT` - Statement that restricts the amount of tuples returned; great for working with large data
