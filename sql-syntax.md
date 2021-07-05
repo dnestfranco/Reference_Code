@@ -38,6 +38,7 @@ A good way to think about this is:
 <br/>
 <br/>
 Here is the overall structure of that query:
+
 ```
 SELECT [attributes]
 FROM [relations]
