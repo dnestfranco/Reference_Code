@@ -21,8 +21,14 @@ Of course, this is large simplification and SQL can take years to master. We wil
 
 Before we talk about data models and loading data, it's usually easier to focus on extracting data from an already established database. This is know as __querying__. This is guide will breakdown the query commands and syntax of SQL.
 
-First and foremost, `SELECT`, `FROM`, and `WHERE` are the three primary clauses of all SQL queries. `SELECT` is asking for the specific _attributes_ (or columns / fields) we are referencing. `FROM` is asking for the specific _relations_ (or tables) we are referencing. `WHERE` is asking for the specific _tuples_ (or rows) we are referencing.
-
+First and foremost, `SELECT`, `FROM`, and `WHERE` are the three primary statements of all SQL queries. 
+<br/>
+`SELECT` is asking for the specific _attributes_ (or columns / fields) we are referencing. 
+<br/>
+`FROM` is asking for the specific _relations_ (or tables) we are referencing. 
+<br/>
+`WHERE` is asking for the specific _tuples_ (or rows) we are referencing.
+<br/>
 A good way to think about this is:
 - First we pin-point the relations we want to get data from
 - Then we specific the attributes we are interested in
@@ -33,17 +39,20 @@ A good way to think about this is:
 <br/>
 Here is the overall structure of that query:
 ```
-SELECT attribute
-FROM relation
-WHERE tuple
-additonal_arguments
+SELECT [attributes]
+FROM [relations]
+WHERE [tuples]
+[additonal_arguments]
 ```
 
-The additonal arguments are what assist us with refining our query. Here are some of the more prominent arguments:
-`AND` or `OR` - The logical "and" and "or"
-`>`, `<`, `>=`, `<=`, `<>` - The logical operators that add order to our elements, such as "greater than"
-`IS` - Similar to "equivalent to"
-`IS NOT` - Similar to "not equivalent to"
-`NULL` - Specifies an empty value
-`ORDER BY` - Use to order the data we specify by
-`DESC` or `ASC` - Two specifications we can order data by, for example "largest to smallest"
+The additonal arguments assist us with refining our queries. Here are some of the more common arguments:
+- `AND` or `OR` - The logical operator "and" and "or"
+- `>`, `<`, `>=`, `<=`, `<>` - The logical operators that add order to our elements, such as "greater than"
+- `IS` - The logical operator that verifies equivalence
+- `IS NOT` - The logical operator that verifies no equivalnece
+- `NULL` - References an empty or blank value
+- `ORDER BY` -Orders the data specified by:
+    - `DESC` or `ASC` - DESC is for descending, ASC is for ascending
+- `LIKE` - The logical operator that compares to a string of text
+    - `%` - Wildcard operator that is an abstract placeholder for characters
+- `LIMIT` - Statement that restricts the amount of tuples returned; great for working with large data
