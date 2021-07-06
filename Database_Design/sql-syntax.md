@@ -34,7 +34,7 @@ A good way to think about this is:
 - Then we specific the attributes we are interested in
 - Lastly, we identify the specific tuples that hold our data by filtering on specific records (or values)
 
-<img src="Screenshot 2021-06-30 153409.png">
+<img src="query-concept.png">
 <br/>
 <br/>
 Here is the overall structure of that query:
