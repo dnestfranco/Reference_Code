@@ -23,36 +23,36 @@ Now that we have a database, we want to populate it with our first table. Let's 
 - Weight
 - Base Stats Total
 
-Then we do:
+Along with the columns, we determine the domain constraints of our attributes. That is, we determine the proper data types, keys, and nullable values. So then we do:
 
 ```
 CREATE TABLE `pokemon` (
     `id` INT(11) NOT NULL,
     `name` VARCHAR(79) NOT NULL,
-    `height` FLOAT(11) DEFAULT NULL
-    `weight` FLOAT(11) DEFAULT NULL, 
-    `bstats_tot` INT(11) DEFAULT NULL,
-)
+    `height` FLOAT(11),
+    `weight` FLOAT(11),
+    `bstats_tot` INT(11)
+);
 ```
 
-Note that if we already know the domain and referential constraints we want to add to our table, then it's best to add them in the beginning, like this:
+Note that if we already know the keys we want to add to our table, then it's best to add them in the beginning, like this:
 
 ```
 CREATE TABLE `pokemon` (
     `id` INT(11) NOT NULL,
     `name` VARCHAR(79) NOT NULL,
-    `height` FLOAT(11) DEFAULT NULL
-    `weight` FLOAT(11) DEFAULT NULL, 
-    `bstats_tot` INT(11) DEFAULT NULL,
+    `height` FLOAT(11),
+    `weight` FLOAT(11),
+    `bstats_tot` INT(11),
     PRIMARY KEY (`id`)
-)
+);
 ```
 
 Otherwise, you will need to add them afterwards using the `ALTER TABLE` command, as follows:
 
 ```
 ALTER TABLE `pokemon`
-    ADD PRIMARY KEY(`id`)
+    ADD PRIMARY KEY(`id`);
 ```
 
 Once again, if you already created something and it exists, running these commands again will result in errors.
@@ -62,7 +62,7 @@ Once again, if you already created something and it exists, running these comman
 
 #### Deleting / Dropping
 
-When dealing with simple data, you can always delete a table and start from scratch. For exaple, if we wanted to delete the pokemon table we can run:
+Sometimes we want to make changes to our tables or start again from scratch. For example, if we wanted to delete the pokemon table we can run:
 
 ```
 DROP TABLE `pokemon`;
@@ -76,25 +76,27 @@ The same can be applied to an entire database, referencing the name of the datab
 DROP DATABASE `pokemon`;
 ```
 
-A very dangerous command, and should only be ran when you are certain of it.
+This is a very dangerous command, and should only be ran when you are certain of it. Make sure to constantly save your SQL scripts and make backups of your databases via SQL dumps.
 
 
 #### Updating a Table
 
-Let's say we made a typo and want to rename one of our columns, then we use a combination of the `ALTER`, `DROP`, and `ADD` commands. Let's drop the 'weight' column (WARNING all data will be deleted), add a 'nature' column, and rename the column 'bstats_tot' to just simply 'bstats':
+Sometimes we can't start from scratch and we work with what we have. Most updates on a table can be performed with a combination of the `ALTER`, `DROP`, and `ADD` commands. 
+
+Let's drop the `weight` column (WARNING all data in this column will be deleted), add a `nature` column, and rename the column `bstats_tot` to just simply `bstats`:
 
 ```
 ALTER TABLE `pokemon`
     DROP `weight` -- column along with all it's row data is deleted forever!
-    ADD `nature` VARCHAR(100) NOT NULL -- note that the constraints must also be defined
-    RENAME COLUMN `bstats_tot` TO `bstats`
+    ADD `nature` VARCHAR(100) NOT NULL -- note that the domain constraints must also be defined
+    RENAME COLUMN `bstats_tot` TO `bstats`;
 ```
 
-### INSERT DATA
+### Insert Data
 
-Now that we have a good idea of creating, deleting, and altering database and tables, let's go ahead and actually start inserting data into our tables.
+Now that we have a good idea of creating, deleting, and altering databases and tables, let's go ahead and start inserting data into our tables.
 
-Let's say we want to insert the first 10 pokemon that exists into our pokemon table. We use a combination of the `INSERT INTO` and `VALUES` commands, as follows:
+Let's say we want to insert the first 10 pokemon and their data that exists into our pokemon table. We use a combination of the `INSERT INTO` and `VALUES` commands, as follows:
 
 ```
 INSERT INTO `pokemon` (`id`, `name`, `height`, bstats`, `nature`) VALUES
@@ -111,3 +113,37 @@ INSERT INTO `pokemon` (`id`, `name`, `height`, bstats`, `nature`) VALUES
 ```
 
 Note that the tuple right after the table name `pokemon` is used to specify the columns and order of columns by which the data will be inserted. It is optional, and if omitted, the data will simply be inserted in the order that is was created in.
+
+
+### Foreign Keys
+
+We got an example of defining a primary key in a table, which was as simple as using the `PRIMARY KEY` command; foreign keys are a bit more complicated.
+
+First we must ensure that whatever attributes we set as foreign keys are referencing a primary key. Recall that a key (primary or foreign), can be composed of a single or multiple attributes. 
+
+First, we start by defining a constraint using the command `CONSTRAINT` and setting a name. Afterwards, we initiate the foreign key and primary key linking using the `FOREIGN KEY` and `REFERENCES` commands, where `FOREIGN KEY` stores the attribute(s) that will reference the primary key of a table, which is defined in `REFERENCES`. 
+
+Let's say we create the evolutions table for our pokemon database, and define all our constraints there. Then we have:
+
+```
+CREATE TABLE `evolutions` (
+    `id_to` INT NOT NULL, -- evolve to pokemon id
+    `id_from` INT NOT NULL, -- evolved from pokemon id
+    `level` INT NOT NULL, -- evolution level
+    PRIMARY KEY (`id_to`),
+    CONSTRAINT fk_pok_id
+    FOREIGN KEY (`id_to`) REFERENCES `pokemon`(`id`),
+    CONSTRAINT fk_pok_evol
+    FOREIGN KEY (`id_from`) REFERENCES `pokemon`(`id`)
+);
+```
+
+If you decide to add these later to a table, you can do so with the following:
+
+```
+ALTER TABLE `evolutions`
+  ADD CONSTRAINT fk_pok_id FOREIGN KEY (`id_to`) REFERENCES `pokemon`(`id`),
+  ADD CONSTRAINT fk_pok_evol FOREIGN KEY (`id_from`) REFERENCES `pokemon`(`id`);
+```
+
+If the foreign key rules are not followed, MySQL will give you errors. Make sure you have an ERD that you can follow, as linking foreign keys and primary keys can get complex the more tables we have.
