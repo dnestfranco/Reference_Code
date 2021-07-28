@@ -1,4 +1,4 @@
-## Creating a Database and Populating it with Relations
+## Creating a Database and Populating it with Relations and Data
 This is a short and sweet cheatsheet to get you started on creating databases and tables, and insert all your data into them. For a more thorough review, check out the [MySQL Cheatsheet](https://websitesetup.org/wp-content/uploads/2020/08/SQL-Cheat-Sheet-websitesetup.pdf).
 
 Note that the syntax used here will be more _formal_, so we will use backquotes when referencing the name of a table or attribute, and proper capitizaliation and indentation to make the code more presentable and easy to read.
