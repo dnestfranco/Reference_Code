@@ -1,43 +1,56 @@
--- create a type table to store our different pokémon types
--- we also add the foreign key constraint to the pokemon table, for data integrity
+-- create a type table to store our different table types
 CREATE TABLE `types` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `type1_name` VARCHAR(20) NOT NULL,
-  `type2_name` VARCHAR(20),
-  PRIMARY KEY(`id`),
-  CONSTRAINT fk_pokemon_types
-  FOREIGN KEY (`id`) REFERENCES `pokemon`(`id`)
+  `type_id` INT NOT NULL AUTO_INCREMENT,
+  `type_name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY(`type_id`)
 );
 
--- relating the pokemon with their respective types
-INSERT INTO `types` (`id`, `type1_name`, `type2_name`) VALUES 
-    (1, 'Grass', 'Poison'),(2, 'Grass', 'Poison'), (3, 'Grass', 'Poison'), (4, 'Fire', NULL),(5, 'Fire', NULL),(6, 'Fire', 'Flying'),
-    (7,'Water', NULL), (8, 'Water', NULL), (9, 'Water', NULL), (10, 'Bug', NULL), (11, 'Bug', NULL),
-    (12, 'Bug', 'Flying'), (13, 'Bug', 'Poison'), (14, 'Bug', 'Poison'), (15, 'Bug', 'Poison'), (16, 'Normal', 'Flying'), (17, 'Normal', 'Flying'),
-    (18, 'Normal', 'Flying'), (19, 'Normal', NULL), (20, 'Normal', NULL), (21, 'Normal', 'Flying'), (22, 'Normal', 'Flying'),
-    (23, 'Poison', NULL), (24, 'Poison', NULL), (25, 'Electric', NULL), (26, 'Electric', NULL), (27, 'Ground', NULL),
-    (28, 'Ground', NULL), (29, 'Poison', NULL), (30, 'Poison', NULL), (31, 'Poison', 'Ground'), (32, 'Poison', NULL),
-    (33, 'Poison', NULL), (34, 'Poison', 'Ground'), (35, 'Normal', NULL), (36, 'Normal', NULL), (37, 'Fire', NULL),
-    (38, 'Fire', NULL), (39, 'Normal', NULL), (40, 'Normal', NULL), (41, 'Poison', 'Flying'), (42, 'Poison', 'Flying'),
-    (43, 'Grass', 'Poison'), (44, 'Grass', 'Poison'), (45, 'Grass', 'Poison'), (46, 'Bug', 'Grass'), (47, 'Bug', 'Grass'), (48, 'Bug', 'Poison'),
-    (49, 'Bug', 'Poison'), (50, 'Ground', NULL), (51, 'Ground', NULL), (52, 'Normal', NULL), (53, 'Normal', NULL),
-    (54, 'Water', NULL), (55, 'Water', NULL), (56, 'Fightning', NULL), (57, 'Fightning', NULL), (58, 'Fire', NULL),
-    (59, 'Fire', NULL), (60, 'Water', NULL), (61, 'Water', NULL), (62, 'Water', 'Fightning'), (63, 'Psychic', NULL),
-    (64, 'Psychic', NULL), (65, 'Psychic', NULL), (66, 'Fightning', NULL), (67, 'Fightning', NULL), (68, 'Fightning', NULL),
-    (69, 'Grass', 'Poison'), (70, 'Grass', 'Poison'), (71, 'Grass', 'Poison'), (72, 'Water', 'Poison'), (73, 'Water', 'Poison'), (74, 'Rock', 'Ground'),
-    (75, 'Rock', 'Ground'), (76, 'Rock', 'Ground'), (77, 'Fire', NULL), (78, 'Fire', NULL), (79, 'Water', 'Psychic'),
-    (80, 'Water', 'Psychic'), (81, 'Electric', NULL), (82, 'Electric', NULL), (83, 'Normal', 'Flying'), (84, 'Normal', 'Flying'),
-    (85, 'Normal', 'Flying'), (86, 'Water', NULL), (87, 'Water', 'Ice'), (88, 'Poison', NULL), (89, 'Poison', NULL),
-    (90, 'Water', NULL),(91, 'Water', 'Ice'), (92, 'Ghost', 'Poison'), (93, 'Ghost', 'Poison'), (94, 'Ghost', 'Poison'),
-    (95, 'Rock', 'Ground'), (96, 'Psychic', NULL), (97, 'Psychic', NULL), (98, 'Water', NULL), (99, 'Water', NULL),
-    (100, 'Electric', NULL), (101, 'Electric', NULL), (102, 'Grass', 'Psychic'), (103, 'Grass', 'Psychic'), (104, 'Ground', NULL),
-    (105, 'Ground', NULL), (106, 'Fightning', NULL), (107, 'Fightning', NULL), (108, 'Normal', NULL), (109, 'Poison', NULL),
-    (110, 'Poison', NULL), (111, 'Ground', 'Rock'), (112, 'Ground', 'Rock'), (113, 'Normal', NULL), (114, 'Grass', NULL),
-    (115, 'Normal', NULL), (116, 'Water', NULL), (117, 'Water', NULL), (118, 'Water', NULL), (119, 'Water', NULL),
-    (120, 'Water', NULL), (121, 'Water', 'Psychic'), (122, 'Psychic', NULL), (123, 'Bug', 'Flying'), (124, 'Ice', 'Psychic'),
-    (125, 'Electric', NULL), (126, 'Fire', NULL), (127, 'Bug', NULL), (128, 'Normal', NULL), (129, 'Water', NULL),
-    (130, 'Water', 'Flying'), (131, 'Water', 'Ice'), (132, 'Normal', NULL), (133, 'Normal', NULL), (134, 'Water', NULL),
-    (135, 'Electric', NULL), (136, 'Fire', NULL), (137, 'Normal', NULL), (138, 'Rock', 'Water'), (139, 'Rock', 'Water'),
-    (140, 'Rock', 'Water'), (141, 'Rock', 'Water'), (142, 'Rock', 'Flying'), (143, 'Normal', NULL), (144, 'Ice', 'Flying'),
-    (145, 'Electric', 'Flying'), (146, 'Fire', 'Flying'), (147, 'Dragon', NULL), (148, 'Dragon', NULL), (149, 'Dragon', 'Flying'),
-    (150, 'Psychic', NULL), (151, 'Psychic', NULL);
+-- and then we add the types into it; note: only gen 1 types
+INSERT INTO `types` (`type_name`) VALUES
+  ('Normal'), ('Fire'), ('Water'), ('Electric'), ('Grass'), ('Ice'), ('Fightning'),
+  ('Poison'), ('Ground'), ('Flying'), ('Psychic'), ('Bug'), ('Rock'), ('Ghost'), ('Dragon');
+
+-- need to create a table to add a types relation
+-- we need to add a foreign key constraint; why? this ensures data integrity across the relations
+CREATE TABLE `pokemon_types` (
+  `pokemon_id` INT NOT NULL,
+  `type1_id` INT NOT NULL,
+  `type2_id` INT,
+  PRIMARY KEY(`pokemon_id`),
+  FOREIGN KEY (`pokemon_id`) REFERENCES `pokemon`(`id`),
+  FOREIGN KEY (`type1_id`) REFERENCES `types`(`type_id`),
+  FOREIGN KEY (`type2_id`) REFERENCES `types`(`type_id`)
+);
+
+-- now, we can add type data
+INSERT INTO `pokemon_types` (`pokemon_id`, `type1_id`, `type2_id`) VALUES 
+  (1, 5, 8),(2, 6, 8), (3,6, 8), (4, 2, NULL),(5, 2, NULL),(6, 2, 10),
+  (7,3, NULL), (8, 3, NULL), (9, 3, NULL), (10, 12, NULL), (11, 12, NULL),
+  (12, 12, 10), (13, 12, 8), (14, 12, 8), (15, 12, 8), (16, 1, 10), (17, 1, 10),
+  (18, 1, 10), (19, 1, NULL), (20, 1, NULL), (21, 1, 10), (22, 1, 10),
+  (23, 8, NULL), (24, 8, NULL), (25, 4, NULL), (26, 4, NULL), (27, 9, NULL),
+  (28, 9, NULL), (29, 8, NULL), (30, 8, NULL), (31, 8, 9), (32, 8, NULL),
+  (33, 8, NULL), (34, 8, 9), (35, 1, NULL), (36, 1, NULL), (37, 2, NULL),
+  (38, 2, NULL), (39, 1, NULL), (40, 1, NULL), (41, 8, 10), (42, 8, 10),
+  (43, 5, 8), (44, 5, 8), (45, 5, 8), (46, 12, 5), (47, 12, 5), (48, 12, 8),
+  (49, 12, 8), (50, 9, NULL), (51, 9, NULL), (52, 1, NULL), (53, 1, NULL),
+  (54, 3, NULL), (55, 3, NULL), (56, 7, NULL), (57, 7, NULL), (58, 2, NULL),
+  (59, 2, NULL), (60, 3, NULL), (61, 3, NULL), (62, 3, 7), (63, 11, NULL),
+  (64, 11, NULL), (65, 11, NULL), (66, 7, NULL), (67, 7, NULL), (68, 7, NULL),
+  (69, 5, 8), (70, 5, 8), (71, 5, 8), (72, 3, 8), (73, 3, 8), (74, 13, 9),
+  (75, 13, 9), (76, 13, 9), (77, 2, NULL), (78, 2, NULL), (79, 3, 11),
+  (80, 3, 11), (81, 4, NULL), (82, 4, NULL), (83, 1, 10), (84, 1, 10),
+  (85, 1, 10), (86, 3, NULL), (87, 3, 6), (88, 8, NULL), (89, 8, NULL),
+  (90, 3, NULL),(91, 3, 6), (92, 14, 8), (93, 14, 8), (94, 14, 8),
+  (95, 13, 9), (96, 11, NULL), (97, 11, NULL), (98, 3, NULL), (99, 3, NULL),
+  (100, 4, NULL), (101, 4, NULL), (102, 5, 11), (103, 5, 11), (104, 9, NULL),
+  (105, 9, NULL), (106, 7, NULL), (107, 7, NULL), (108, 1, NULL), (109, 8, NULL),
+  (110, 8, NULL), (111, 9, 13), (112, 9, 13), (113, 1, NULL), (114, 5, NULL),
+  (115, 1, NULL), (116, 3, NULL), (117, 3, NULL), (118, 3, NULL), (119, 3, NULL),
+  (120, 3, NULL), (121, 3, 11), (122, 11, NULL), (123, 12, 10), (124, 6, 11),
+  (125, 4, NULL), (126, 2, NULL), (127, 12, NULL), (128, 1, NULL), (129, 3, NULL),
+  (130, 3, 10), (131, 3, 6), (132, 1, NULL), (133, 1, NULL), (134, 3, NULL),
+  (135, 4, NULL), (136, 2, NULL), (137, 1, NULL), (138, 13, 3), (139, 13, 3),
+  (140, 13, 3), (141, 13, 3), (142, 13, 10), (143, 1, NULL), (144, 6, 10),
+  (145, 4, 10), (146, 2, 10), (147, 15, NULL), (148, 15, NULL), (149, 15, 10),
+  (150, 11, NULL), (151, 11, NULL);
